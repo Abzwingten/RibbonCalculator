@@ -2,8 +2,13 @@
 Draft ribbon topology generator for custom planar ribbon technology audio driver for project https://www.thingiverse.com/thing:4758902
 
 # What is it
-This is Unity3D project.
-It contains code for procedurical generation of non-linear magnet field compensated ribbon.
+This is Unity3D project, that can helps in custom ribbon headphones development. It can makes topology with your size parameters. 
+It can optimize force gradient over entire ribbon, that appears by magnetic field with known curvature. 
+Why Unity3D. 
+It's my everyday tool. Initially, that project starts as OpenSCAD project, but i was not satisfied with OpenSCAD language limitations. 
+
+# How and why it works
+Project contains code for procedurical generation of non-linear magnet field compensated ribbon.
 Common parameters placed in ./Assets/FormGenerator.cs
 ```C#
             var linesCount = 17;
@@ -20,7 +25,6 @@ Common parameters placed in ./Assets/FormGenerator.cs
  - deadZone - distance between two rows of lines
  - thin - generated model thin
 
-# How it works
 Project adds RibbonSolver item into Unity3D main menu.
 There are two options:
  - Create Ribbon Form
@@ -30,5 +34,9 @@ Generated mesh also visible inside of Unity3D viewport.
 Removes generated mesh from scene. Works only for current session.
 
 # Math
-Curature of magnetig field contains inside GetWidth fuction. It's approximated magnetig field density module. In strength field algorithm creates wide lines, in weak - narrow lines.
-P.S. Sorry for bad code, i no have time for cleaning, so i will be very grateful if someone helps me.
+Curvature of magnetic field contains inside GetWidth() fuction. It's approximated magnetig field density module over two driver sides, in line between center of magnets. Algorithm creates wide lines in strength field, and in weak - narrow lines.
+
+P.S. Sorry for bad code, i have no time for cleaning, so i will be very grateful if someone helps me.
+
+# License
+MIT
