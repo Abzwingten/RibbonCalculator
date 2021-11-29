@@ -28,10 +28,14 @@ Common parameters placed in ./Assets/FormGenerator.cs
 You can work on Assets/Scenes/SampleScene.unity scene.
 Project adds RibbonSolver item into Unity3D main menu.
 There are two options:
- - Create Ribbon Form
+
+- Create Ribbon Form
+
 Creates 3d mesh with parameters inside of ./Assets/FormGenerator.cs and performs stl mesh export. You can select save path in save file dialog.
 Generated mesh also visible inside of Unity3D viewport.
- - Clear
+
+- Clear
+
 Removes generated mesh from scene. Works only for current session.
 
 # Math
