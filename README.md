@@ -2,7 +2,7 @@
 Draft ribbon topology generator for custom planar ribbon technology audio driver for project https://www.thingiverse.com/thing:4758902
 
 # What is it
-This is Unity3D project, that can helps in custom ribbon headphones development. It can makes topology with your size parameters. 
+This is Unity3D project, that can helps in custom ribbon headphones development. It can generates topology with your parameters. 
 It can optimize force gradient over entire ribbon, that appears by magnetic field with known curvature. 
 Why Unity3D. 
 It's my everyday tool. Initially, that project starts as OpenSCAD project, but i was not satisfied with OpenSCAD language limitations. 
@@ -25,6 +25,7 @@ Common parameters placed in ./Assets/FormGenerator.cs
  - deadZone - distance between two rows of lines
  - thin - generated model thin
 
+You can work on Assets/Scenes/SampleScene.unity scene.
 Project adds RibbonSolver item into Unity3D main menu.
 There are two options:
  - Create Ribbon Form
