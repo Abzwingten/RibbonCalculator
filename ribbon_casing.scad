@@ -35,13 +35,13 @@ spacing = 0.01;
 
 
 module bolt_outer () {
-    linear_extrude(height = bolt_hole_depth, center = true)
+    linear_extrude(height = bolt_hole_depth +spacing, center = true)
         circle(bolt_hole_r + bolt_hole_thickness);
 
 }
 
 module bolt_hole () {
-    linear_extrude(height = bolt_hole_depth, center = true)
+    linear_extrude(height = bolt_hole_depth + spacing, center = true)
         circle(bolt_hole_r);
 
 }
@@ -137,15 +137,30 @@ module case_inner() {
 }
 
 module case_outer() {
-    union(){
-        
-        cube([case_w, case_l, case_h], center = true);
-        difference(){
+    difference() {
+        union(){
+            cube([case_w, case_l, case_h], center = true);
             translate([case_w/2, 0, 0]) bolt_outer();
-            translate([case_w/2, 0, 0]) bolt_hole();
+            translate([case_w/2, 25, 0]) bolt_outer();
+            translate([case_w/2, -25, 0]) bolt_outer();
+
+            
+            
+            translate([-case_w/2, 0, 0]) bolt_outer();
+            translate([-case_w/2, 25, 0]) bolt_outer();
+            translate([-case_w/2, -25, 0]) bolt_outer();
         }
-//        translate([-case_w/2, 0, 0]) bolt_hole();
-   
+        translate([case_w/2, 0, 0]) bolt_hole();
+        translate([case_w/2, 25, 0]) bolt_hole();
+        translate([case_w/2, -25, 0]) bolt_hole();
+
+        
+        
+        translate([-case_w/2, 0, 0]) bolt_hole();
+        translate([-case_w/2, 25, 0]) bolt_hole();
+        translate([-case_w/2, -25, 0]) bolt_hole();
+
+
     }
 }
 
