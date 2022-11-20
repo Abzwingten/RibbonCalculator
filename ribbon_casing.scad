@@ -1,50 +1,5 @@
-// DIMENSIONS
+include  <dimensions.scad>
 
-$fn = 50;
-
-magnet_h = 10;
-magnet_l = 60;
-magnet_w = 5;
-
-
-metal_bar_long_l = 68;
-metal_bar_long_w = 2;
-metal_bar_long_h = 10;
-
-bolt_hole_r = 3 / 2;
-bolt_hole_depth = 7;
-bolt_hole_thickness = 2;
-
-ribbon_opening_l = 58;
-ribbon_opening_w = 18;
-
-case_l = metal_bar_long_l;
-case_w = 40;
-case_h = 7;
-case_wall_w = 3.5;
-case_floor_th = case_h - magnet_w;
-
-magnet_cutout_w = magnet_w;
-magnet_cutout_l = 1;
-
-magnet_guard_th = 0.5;
-
-
-spacing = 0.01;
-
-
-
-module bolt_outer () {
-    linear_extrude(height = bolt_hole_depth +spacing, center = true)
-        circle(bolt_hole_r + bolt_hole_thickness);
-
-}
-
-module bolt_hole () {
-    linear_extrude(height = bolt_hole_depth + spacing, center = true)
-        circle(bolt_hole_r);
-
-}
 
 
 module magnet() {
@@ -52,7 +7,6 @@ module magnet() {
         #cube([magnet_w, magnet_l, magnet_h]);
     }
 }
-
 
 module metal_bar(){
     offset = ribbon_opening_w/2 + magnet_cutout_w + magnet_guard_th/2 + metal_bar_long_w/2;
@@ -63,13 +17,11 @@ module metal_bar(){
     cube([metal_bar_long_w, metal_bar_long_l + spacing, metal_bar_long_h], center = true);
 }
 
-
 module magnet_guard(side = 1){
     magnet_guard_l = ribbon_opening_l;
         translate([side * ribbon_opening_w/2, 0, 0])
         cube([magnet_guard_th, magnet_guard_l, case_h], center = true);
 }
-
 
 module magnet_guard_pair() {
     magnet_guard();
@@ -77,51 +29,22 @@ module magnet_guard_pair() {
     magnet_guard(side);
 }
 
-
 module magnet_cutout (){
-    cube([
+    color("blue") cube([
         magnet_cutout_w + spacing,
-        magnet_cutout_l + spacing,
-        magnet_h/2 + case_floor_th + spacing], center = true);
+        magnet_cutout_l,
+        case_h + case_floor_th], center = true);
 }
-
 
 module magnet_cutouts (){
-    //right top
-    translate([
-        ribbon_opening_w/2 + magnet_guard_th/2 + magnet_cutout_w/2,
-        magnet_l/2 - magnet_cutout_l/2 - spacing,
-        magnet_h/4 - case_floor_th/1.3
-        ])
-        { magnet_cutout();}
-
-    //right bottom
-    translate([
-        ribbon_opening_w/2 + magnet_guard_th/2 + magnet_cutout_w/2,
-        -(magnet_l/2 - magnet_cutout_l/2 - spacing),
-        magnet_h/4 - case_floor_th/1.3
-        ])
-        { magnet_cutout();}
-
-
-    //left top
-    translate([
-        -(ribbon_opening_w/2 + magnet_guard_th/2 + magnet_cutout_w/2),
-        (magnet_l/2 - magnet_cutout_l/2 - spacing),
-        magnet_h/4 - case_floor_th/1.3
-        ])
-        { magnet_cutout();}
-
-    //left bottom
-    translate([
-        -(ribbon_opening_w/2 + magnet_guard_th/2 + magnet_cutout_w/2),
-        -(magnet_l/2 - magnet_cutout_l/2 - spacing),
-        magnet_h/4 - case_floor_th/1.3
-        ])
-        { magnet_cutout();}
+    for(i = [-1 : 2 : 1], j = [-1 : 2: 1])
+              translate([
+                i * (ribbon_opening_w/2 + magnet_guard_th/2 + magnet_cutout_w/2),
+                j * (magnet_l/2 - magnet_cutout_l/2 - spacing),
+                case_floor_th
+                ])
+                { magnet_cutout();}
 }
-
-
 
 module case_inner() {
     width = (magnet_w + metal_bar_long_w) * 2 + ribbon_opening_w;
@@ -137,52 +60,29 @@ module case_inner() {
 }
 
 module case_outer() {
+// bullshit, i dunno how to make loops and double difference
     difference() {
         union(){
-            cube([case_w, case_l, case_h], center = true);
-            translate([case_w/2, 0, 0]) bolt_outer();
-            translate([case_w/2, 25, 0]) bolt_outer();
-            translate([case_w/2, -25, 0]) bolt_outer();
-
-            
-            
-            translate([-case_w/2, 0, 0]) bolt_outer();
-            translate([-case_w/2, 25, 0]) bolt_outer();
-            translate([-case_w/2, -25, 0]) bolt_outer();
+            roundedcube([case_w, case_l, case_h], center = true, radius = 1, "z");
+            ribbon_bolt_outer_shell();            
         }
-        translate([case_w/2, 0, 0]) bolt_hole();
-        translate([case_w/2, 25, 0]) bolt_hole();
-        translate([case_w/2, -25, 0]) bolt_hole();
-
-        
-        
-        translate([-case_w/2, 0, 0]) bolt_hole();
-        translate([-case_w/2, 25, 0]) bolt_hole();
-        translate([-case_w/2, -25, 0]) bolt_hole();
-
-
+        ribbon_bolt_holes();
     }
 }
 
 
-module ribbon_opening () {
-    cube([ribbon_opening_w, ribbon_opening_l, 10], center = true);
+
+module ribbon_casing() {
+    magnet_guard_pair();
+
+    difference(){
+        case_outer();
+        case_inner();
+        ribbon_opening(fillet = 0);
+    }
 }
 
 
-magnet_guard_pair();
 
-difference(){
-    case_outer();
-    case_inner();
-    ribbon_opening();
-}
-
-//bolt_hole();
-//magnet();
-//difference() {
-//    cube([magnet_h, magnet_l, magnet_w]);
-//    sphere(5);
-//};
-
+ribbon_casing();
 
