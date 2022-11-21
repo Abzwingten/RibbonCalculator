@@ -63,7 +63,8 @@ module case_outer() {
 // bullshit, i dunno how to make loops and double difference
     difference() {
         union(){
-            roundedcube([case_w, case_l, case_h], center = true, radius = 1, "z");
+            roundedcube([case_w, case_l, case_h], center = true, radius = 0.69, "zmax");
+            
             ribbon_bolt_outer_shell();            
         }
         ribbon_bolt_holes();
