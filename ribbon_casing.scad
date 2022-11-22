@@ -59,7 +59,7 @@ module case_inner() {
     }
 }
 
-module case_outer() {
+module case_outer() { 
 // bullshit, i dunno how to make loops and double difference
     difference() {
         union(){

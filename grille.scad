@@ -13,22 +13,17 @@ width = radius * 2;
 horiz_dist = width;
 
 
-for(x = [0 : horiz_dist : 25], y = [0 : vert_dist : 25]){
-   
-    translate([x, y*row_mult, 0])
-        circle(radius);
-
-}
+//for(x = [0 : horiz_dist : 25], y = [0 : vert_dist : 25]){
+//   
+//    translate([x, y, 0])
+//        circle(radius);
+//
+//}
 
 
 //plate_base();
+hull(){
+    linear_extrude(1) circle(90, $fn = 6);
+    translate([0, 0, 40]) linear_extrude(1)  circle(90);
+}
 
-
-hex_peri =  repeat([[1,120]],6);
-hex_tile= peri_to_tile(hex_peri);
-dx=[1+cos(60),-sin(60),0];
-dy=[0,2*sin(60),0];
-echo(dx,dy);
-scale(20) 
-   repeat_tile(2,2,dx,dy)
-      fill_tile(inset_tile(hex_tile,0.02));

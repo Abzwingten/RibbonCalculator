@@ -34,23 +34,26 @@ magnet_guard_th = 0.3;
 
 plate_th = 2.5;
 plate_d = 95;
-
+plate_offset_h = 2;
+plate_offset_w = 2;
 
 
 grille_th = plate_th;
-grille_d = plate_d - 3;
+grille_d = sqrt(3)/2 * (plate_d/2 -5);
 
-six_hole_spacing = 10;
+mounting_hole_spacing = 10;
 spacing = 0.01;
+body_mounting_hole_offset = plate_offset_h;
 
-
+inner_r = sqrt(3)/2*plate_d/2;
+body_h = 28;
 
 // <__________________________> //
 
 module plate_base(diameter = plate_d){
 rotate([0,0,90]) 
             linear_extrude(height = plate_th, center = true)
-                circle(d = diameter, $fn = 6);
+                circle(d = diameter);
 }
 
 module ribbon_opening (fillet = 1) {
@@ -76,7 +79,7 @@ for (i = [-25 : 25 : 25], j = [-1 : 2 : 1])
 module mounting_holes() {
     for(i = [-3 : 3])
        rotate(i * 360/6)
-            translate([0, plate_d/2 - six_hole_spacing, 0])
+            translate([0, plate_d/2 - mounting_hole_spacing, 0])
                 bolt_hole();
 }
 
