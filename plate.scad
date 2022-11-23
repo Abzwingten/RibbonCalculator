@@ -1,10 +1,10 @@
 include  <dimensions.scad>
 
-module plate(diameter = plate_d){
+module plate(){
     difference(){
-        plate_base(diameter = plate_d);
-        ribbon_opening(fillet = 0);
+        plate_base();
         pressure_equalization_holes();
+        ribbon_opening(fillet = 1);
         ribbon_bolt_holes();
         mounting_holes();
     }
@@ -17,4 +17,5 @@ module pressure_equalization_holes() {
 
 }
 
-plate(plate_d);
+
+plate();

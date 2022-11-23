@@ -1,8 +1,9 @@
 include<roundedcube.scad>
 
-$fa = 1.0;
+$fa = 2.0;
 $fs = 0.1; // filament size / 2
 
+$fn= $preview ? 32 : 128;
 
 //VARIABLES
 magnet_h = 20;
@@ -50,10 +51,10 @@ body_h = 28;
 
 // <__________________________> //
 
-module plate_base(diameter = plate_d){
+module plate_base(){
 rotate([0,0,90]) 
             linear_extrude(height = plate_th, center = true)
-                circle(d = diameter);
+                circle(r = plate_d/2 - plate_offset_w);
 }
 
 module ribbon_opening (fillet = 1) {
