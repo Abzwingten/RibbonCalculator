@@ -31,10 +31,20 @@ magnet_cutout_l = 1;
 
 magnet_guard_th = 0.3;
 
+aux_body_r = 12/2;
+aux_th = 2;
+aux_body_outer_r = aux_body_r + aux_th;
+
+aux_body_h = 11;
+aux_ring_h = 2;
+aux_ring_r = 15;
+
+
+aux_body_cutout = 11;
 
 
 plate_th = 2.5;
-plate_d = 95;
+plate_d = 95 ;
 plate_offset_h = 2;
 plate_offset_w = 2;
 

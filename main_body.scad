@@ -6,35 +6,47 @@ i = 1;
 
 
 module body(){
-translate([0, 0, body_h])
-rotate([0, 180, 0])
-union(){
-    main_body();
-    mounting_holes_mounts();
-}
+    difference(){
+        translate([0, 0, body_h])
+        rotate([0, 180, 0])
+        union(){
+            main_body();
+            mounting_holes_mounts();
+        }
+        translate([-plate_d/4  ,plate_d/2,body_h/2])
+            
+            rotate([90,0,30]) linear_extrude(25) #circle(aux_body_outer_r - 0.2 - spacing, $fn = 12);
+    }
+    difference(){ 
+        translate([-plate_d/4 +3,plate_d/2 -5,body_h/2])
+                rotate([90,0,30])
+            aux_connector();
+        
+    }
 }
 
-
+//aux_connector();
 body();
 
 
 //
-//translate([0, 0, (body_h - plate_offset_h/2) * i])
-//    color("red", 0.6) plate();
-//
-//
-//translate ([0, 0, (body_h - plate_th - plate_offset_h) * i])
-//    rotate([0, 180, 0])
-//        color("yellow", 0.8)
-//            ribbon_casing();
-//translate ([0, 0, (body_h - plate_th - plate_offset_h - case_h) * i])
-//    rotate([0, 0, 0])
-//        color("green", 0.8)
-//            ribbon_casing();
+rotate([0,0,0]) {
+translate([0, 0, (body_h - plate_offset_h/2) * i])
+    color("red", 0.6) plate();
 
+
+translate ([0, 0, (body_h - plate_th - plate_offset_h) * i])
+    rotate([0, 180, 0])
+        color("yellow", 0.8)
+            ribbon_casing();
+translate ([0, 0, (body_h - plate_th - plate_offset_h - case_h) * i])
+    rotate([0, 0, 0])
+        color("green", 0.8)
+            ribbon_casing();
+}
 
 module main_body() {
-    aux_connector();
+//    
     difference(){
          color("Teal", 0.8) hull(){
             linear_extrude(0.1) circle(plate_d/2);
@@ -48,35 +60,30 @@ module main_body() {
         plate_offset();
         translate([0, 0, body_h - 1.5])
             cylinder(h=4, r = sqrt(3)/2 * (plate_d/2 -5), $fn = 6);
+        
+       
     }
 }
 
 
 
 module aux_connector(){
-    aux_body_r = 12/2;
-    aux_body_cutout = 11;
-    aux_body_l = 20;
-    aux_body_outer_r = aux_body_r + 2;
-    
-    union(){
+
+    difference(){
+        cylinder(h = aux_body_h, r = aux_body_outer_r);
+        translate([0, 0, -spacing]) cylinder(h = aux_ring_h, r = aux_ring_r/2);
         
-        translate([0, 0, 9.1]) cylinder(h = aux_body_l, r = aux_body_outer_r);
-             
-        
-        linear_extrude(9.1)    
-            difference(){
-                    circle(aux_body_outer_r);
-                difference(){
-                    circle(aux_body_r);
-                    for (i = [-1:2:1]) 
-                        translate([0, i*aux_body_r, 0])
-                            square([aux_body_cutout,1], center = true);
+        difference(){
+            linear_extrude(aux_body_h + spacing)
+                    difference(){
+                        circle(aux_body_r);
+                        for (i = [-1:2:1]) 
+                            translate([0, i*aux_body_r, 0])
+                                square([aux_body_cutout,1], center = true);
+                    }
                 }
             }
         }
-}
-
 
 
 module plate_offset(){
