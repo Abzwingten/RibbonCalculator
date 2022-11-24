@@ -3,7 +3,7 @@ include<roundedcube.scad>
 $fa = 2.0;
 $fs = 0.1; // filament size / 2
 
-$fn= $preview ? 32 : 128;
+$fn= $preview ? 32 : 150;
 
 //VARIABLES
 magnet_h = 20;
@@ -57,7 +57,7 @@ spacing = 0.01;
 body_mounting_hole_offset = plate_offset_h;
 
 inner_r = sqrt(3)/2*plate_d/2;
-body_h = 28;
+body_h = 30;
 
 // <__________________________> //
 

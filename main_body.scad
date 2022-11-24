@@ -6,6 +6,7 @@ i = 1;
 
 
 module body(){
+    color("teal")
     difference(){
         translate([0, 0, body_h])
         rotate([0, 180, 0])
@@ -13,13 +14,14 @@ module body(){
             main_body();
             mounting_holes_mounts();
         }
-        translate([-plate_d/4  ,plate_d/2,body_h/2])
+        translate([-plate_d/4 -15 ,plate_d/2,body_h/2])
             
-            rotate([90,0,30]) linear_extrude(25) #circle(aux_body_outer_r - 0.2 - spacing, $fn = 12);
+            rotate([90,0,25]) linear_extrude(40) #circle(aux_body_outer_r - 0.3 - spacing, $fn = 12);
     }
+    color("teal")
     difference(){ 
-        translate([-plate_d/4 +3,plate_d/2 -5,body_h/2])
-                rotate([90,0,30])
+        translate([-plate_d/4 -12,plate_d/2 -10,body_h/2])
+                rotate([90,0,25])
             aux_connector();
         
     }
@@ -27,12 +29,15 @@ module body(){
 
 //aux_connector();
 body();
+//test_ribbon();
 
 
-//
+
+module test_ribbon(){
+
 rotate([0,0,0]) {
-translate([0, 0, (body_h - plate_offset_h/2) * i])
-    color("red", 0.6) plate();
+//translate([0, 0, (body_h - plate_offset_h/2) * i])
+//    color("red", 0.6) plate();
 
 
 translate ([0, 0, (body_h - plate_th - plate_offset_h) * i])
@@ -43,6 +48,7 @@ translate ([0, 0, (body_h - plate_th - plate_offset_h - case_h) * i])
     rotate([0, 0, 0])
         color("green", 0.8)
             ribbon_casing();
+}
 }
 
 module main_body() {
@@ -68,13 +74,13 @@ module main_body() {
 
 
 module aux_connector(){
-
+    translate([0, 0, 2.9])
     difference(){
-        cylinder(h = aux_body_h, r = aux_body_outer_r);
+        cylinder(h = aux_body_h, r = aux_body_outer_r + 1, $fn = 12);
         translate([0, 0, -spacing]) cylinder(h = aux_ring_h, r = aux_ring_r/2);
         
         difference(){
-            linear_extrude(aux_body_h + spacing)
+            linear_extrude(aux_body_h  + spacing)
                     difference(){
                         circle(aux_body_r);
                         for (i = [-1:2:1]) 
