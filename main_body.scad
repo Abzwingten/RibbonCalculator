@@ -2,53 +2,49 @@ include <dimensions.scad>
 use <ribbon_casing.scad>
 use <plate.scad>
 use <grille.scad>
-
-i = 1;
-
+use <headband_mount.scad>
 
 module body(){
     color("teal")
     difference(){
-        translate([0, 0, body_h])
-        rotate([0, 180, 0])
+        translate([0, 0, body_h]) rotate([0, 180, 0])
         union(){
             main_body();
             mounting_holes_mounts();
         }
         translate([-plate_d/4 -15 ,plate_d/2,body_h/2])
-            
             rotate([90,0,25]) linear_extrude(40) #circle(aux_body_outer_r - 0.3 - spacing, $fn = 12);
+//        for (i = [-1:2:1])
+//            rotate([i*90, 0, 0])
+//                translate([body_h/2*i, 0, plate_d/2 - 10])
+        for (i = [-1:2:1])
+            rotate([0, 90* i, 0])
+                translate([-body_h/2 * i, 0, plate_d/2 - 17])
+                headband_mount_hole(3);
+
     }
     color("red")
-    difference(){ 
         translate([-plate_d/4 -12,plate_d/2 -10,body_h/2])
                 rotate([90,0,25])
             aux_connector();
-        
-    }
 }
-
-//aux_connector();
-body();
-test_ribbon();
-grille();
 
 module test_ribbon(){
 
-rotate([0,0,0]) {
-translate([0, 0, (body_h - plate_offset_h/2) * i])
-    color("red", 0.6) plate();
+    rotate([0,0,0]) {
+        translate([0, 0, (body_h - plate_offset_h/2) * i])
+            color("red", 0.6) plate();
 
 
-translate ([0, 0, (body_h - plate_th - plate_offset_h) * i])
-    rotate([0, 180, 0])
-        color("yellow", 0.8)
-            ribbon_casing();
-translate ([0, 0, (body_h - plate_th - plate_offset_h - case_h) * i])
-    rotate([0, 0, 0])
-        color("green", 0.8)
-            ribbon_casing();
-}
+        translate ([0, 0, (body_h - plate_th - plate_offset_h) * i])
+            rotate([0, 180, 0])
+                color("yellow", 0.8)
+                    ribbon_casing();
+        translate ([0, 0, (body_h - plate_th - plate_offset_h - case_h) * i])
+            rotate([0, 0, 0])
+                color("green", 0.8)
+                    ribbon_casing();
+    }
 }
 
 module main_body() {
@@ -67,8 +63,8 @@ module main_body() {
         translate([0, 0, body_h - 1.5])
             cylinder(h=4, r = sqrt(3)/2 * (plate_d/2 -5), $fn = 6);
         translate([0, 0, body_h -9])
-        cylinder(9, r = grille_r - 6, $fn = 6);
-        
+        cylinder(9, r = grille_r - 5.6, $fn = 6);
+       
        
     }
 }
@@ -147,3 +143,13 @@ module mounting_holes_mounts(){
 }
     
 
+
+
+
+
+
+//headband_mount();
+//aux_connector();
+body();
+//test_ribbon();
+//grille();

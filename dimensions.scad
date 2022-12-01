@@ -59,6 +59,12 @@ body_mounting_hole_offset = plate_offset_h;
 inner_r = sqrt(3)/2*plate_d/2;
 body_h = 30;
 
+
+
+headband_mount_outer_d = 6;
+headband_mount_inner_d = 4;
+headband_mount_length_1 = 15; 
+
 // <__________________________> //
 
 module plate_base(){
