@@ -1,6 +1,7 @@
 include <dimensions.scad>
 use <ribbon_casing.scad>
 use <plate.scad>
+use <grille.scad>
 
 i = 1;
 
@@ -18,7 +19,7 @@ module body(){
             
             rotate([90,0,25]) linear_extrude(40) #circle(aux_body_outer_r - 0.3 - spacing, $fn = 12);
     }
-    color("teal")
+    color("red")
     difference(){ 
         translate([-plate_d/4 -12,plate_d/2 -10,body_h/2])
                 rotate([90,0,25])
@@ -29,15 +30,14 @@ module body(){
 
 //aux_connector();
 body();
-//test_ribbon();
-
-
+test_ribbon();
+grille();
 
 module test_ribbon(){
 
 rotate([0,0,0]) {
-//translate([0, 0, (body_h - plate_offset_h/2) * i])
-//    color("red", 0.6) plate();
+translate([0, 0, (body_h - plate_offset_h/2) * i])
+    color("red", 0.6) plate();
 
 
 translate ([0, 0, (body_h - plate_th - plate_offset_h) * i])
@@ -66,6 +66,8 @@ module main_body() {
         plate_offset();
         translate([0, 0, body_h - 1.5])
             cylinder(h=4, r = sqrt(3)/2 * (plate_d/2 -5), $fn = 6);
+        translate([0, 0, body_h -9])
+        cylinder(9, r = grille_r - 6, $fn = 6);
         
        
     }

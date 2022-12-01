@@ -1,29 +1,19 @@
 include <dimensions.scad>
-include <tile_functions.scad>
-
-radius = 4;
-
-size = sqrt(3)/2 * radius; // радиус описанной окружности
-height = size * 2; // высота шестиугольника
-
-vert_dist = height * 3/4;
-
-width = radius * 2;
-
-horiz_dist = width;
+include <DotScad/src/hexagons.scad>
 
 
-//for(x = [0 : horiz_dist : 25], y = [0 : vert_dist : 25]){
-//   
-//    translate([x, y, 0])
-//        circle(radius);
-//
-//}
 
+//grille_th = plate_th;
+//grille_d = sqrt(3)/2 * (plate_d/2 -5);
+levels = 6;
 
-//plate_base();
-hull(){
-    linear_extrude(1) circle(90, $fn = 6);
-    translate([0, 0, 40]) linear_extrude(1)  circle(90);
-}
+module grille(){
 
+    color("yellow")
+    linear_extrude(grille_th)
+        difference(){
+            circle(grille_r, $fn = 6);
+            hexagons(7, 2, 3);
+        }
+        
+    }

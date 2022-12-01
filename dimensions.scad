@@ -50,7 +50,7 @@ plate_offset_w = 2;
 
 
 grille_th = plate_th;
-grille_d = sqrt(3)/2 * (plate_d/2 -5);
+grille_r = sqrt(3)/2 * (plate_d/2 -5);
 
 mounting_hole_spacing = 10;
 spacing = 0.01;
