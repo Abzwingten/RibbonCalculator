@@ -61,8 +61,8 @@ body_h = 30;
 
 
 
-headband_mount_outer_d = 6;
-headband_mount_inner_d = 4;
+headband_mount_outer_d = 7;
+headband_mount_inner_d = 5;
 headband_mount_length_1 = 15; 
 
 // <__________________________> //

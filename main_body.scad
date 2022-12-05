@@ -14,9 +14,6 @@ module body(){
         }
         translate([-plate_d/4 -15 ,plate_d/2,body_h/2])
             rotate([90,0,25]) linear_extrude(40) #circle(aux_body_outer_r - 0.3 - spacing, $fn = 12);
-//        for (i = [-1:2:1])
-//            rotate([i*90, 0, 0])
-//                translate([body_h/2*i, 0, plate_d/2 - 10])
         for (i = [-1:2:1])
             rotate([0, 90* i, 0])
                 translate([-body_h/2 * i, 0, plate_d/2 - 17])
@@ -30,12 +27,9 @@ module body(){
 }
 
 module test_ribbon(){
-
     rotate([0,0,0]) {
         translate([0, 0, (body_h - plate_offset_h/2) * i])
             color("red", 0.6) plate();
-
-
         translate ([0, 0, (body_h - plate_th - plate_offset_h) * i])
             rotate([0, 180, 0])
                 color("yellow", 0.8)
@@ -48,7 +42,6 @@ module test_ribbon(){
 }
 
 module main_body() {
-//    
     difference(){
          color("Teal", 0.8) hull(){
             linear_extrude(0.1) circle(plate_d/2);
