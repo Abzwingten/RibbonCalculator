@@ -70,17 +70,16 @@ module aux_connector(){
         cylinder(h = aux_body_h, r = aux_body_outer_r + 1, $fn = 12);
         translate([0, 0, -spacing]) cylinder(h = aux_ring_h, r = aux_ring_r/2);
         
-        difference(){
+
             linear_extrude(aux_body_h  + spacing)
                     difference(){
                         circle(aux_body_r);
                         for (i = [-1:2:1]) 
                             translate([0, i*aux_body_r, 0])
                                 square([aux_body_cutout,1], center = true);
-                    }
-                }
             }
-        }
+     }
+}
 
 
 module plate_offset(){

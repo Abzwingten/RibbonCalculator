@@ -2,35 +2,45 @@ include <dimensions.scad>
 
 
 //headband_mount_inner_d = 5;
-plate_th = 4.5;
-plate_d = 40;
+vise_th = 4.5;
+vise_d = 40;
 
-bolt_d = 3;
-nut_d = 4;
+vise_bolt_d = 3;
+vise_nut_d = 4;
 
+
+knob_d = 31;
 
 module tube_vise_plate (){
-    linear_extrude(plate_th)
-    circle(plate_d/2, $fn = 6);
+    linear_extrude(vise_th)
+    circle(vise_d/2, $fn = 6);
 }
 
 module bolt_hole(diameter = 3) {
     translate([0, 0, -0.5])
-    linear_extrude(plate_th + 10)
+    linear_extrude(vise_th + 10)
     circle(diameter/2);
 }
 
+module knob_fillets (){
+    for(i = [-3 : 3])
+            rotate(i * 360/6)
+            translate([0, knob_d/2+ 2, -spacing])
+                cylinder(h = 6, r1 = 5, r2 = 0.5);
+}
 
 module knob(){
     
     difference() {
+       
         hull(){
             translate([0, 0, 4])
                 sphere(d = 6);
-            cylinder(h = 1, d1 = 31, d2 = 35,  $fn = 6);
-            cylinder(h = 4, d1 = 31, d2 = 30,  $fn = 12);
+            cylinder(h = 1, d1 = knob_d, d2 = knob_d+5,  $fn = 6);
+            cylinder(h = 4, d1 = knob_d + 1, d2 = knob_d,  $fn = 12);
         }
-    bolt_hole(3);
+        knob_fillets();
+        bolt_hole(3);
     }
 }
 
@@ -41,7 +51,7 @@ module copper_tube(){
     c_t_h = 10;
     rotate([90, 0, 0])
     for (i = [-1:2:1])
-        translate([c_t_offset * i, plate_th, -c_t_l/2])
+        translate([c_t_offset * i, vise_th, -c_t_l/2])
         cylinder(h = c_t_l, r = c_t_d/2);
 }
 
